@@ -69,20 +69,124 @@ function start() {
 }
 // ===================== menu functions ==================== 
 function newDepartment() {
+    inquirer
+        .prompt([
+            {
+                name: "createDept",
+                type: "input",
+                message: "Enter new department name: ",
+            }
+        ])
+        .then(function (answer) {
+            connection.query("INSERT INTO department SET ?",
+                {
+                    deptName: answer.createDept
+                },
+                function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                }
+            )
+            console.table(answer);
+            console.log(` ==========  Success! Your new department has been added ========== `);
+        })
+}
+function newRole() {
+    inquirer
+        .prompt([
+            {
+                name: "role",
+                type: "input",
+                message: "Enter the job title for new role: "
+            },
+            {
+                name: "roleWage",
+                type: "input",
+                message: "Enter the salary for this role: "
+            }
+        ])
+        .then(function (answer) {
+            connection.query("INSERT INTO role SET ?",
+                {
+                    title: answer.role,
+                    salary: answer.roleWage,
+                },
+                function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                }
+            ),
+
+                console.table(answer);
+            console.log(` ==========  Success! Your new department has been added ========== `);
+            start();
+        });
 
 }
-function newRole(){
+function newEmployee() {
+    // connect to db for role list and information to attach to new employee
+    connection.query("SELECT * FROM role", function (err, res) {
+        if (err) throw err;
 
+        inquirer
+            .prompt([
+                {
+                    name: "firstName",
+                    type: "input",
+                    message: "Enter new employee's fisrt name: ",
+                },
+                {
+                    name: "lastName",
+                    type: "input",
+                    message: "Enter new employee's last name: "
+                },
+                {
+                    name: "role",
+                    type: "list",
+                    message: "Select new employee's role: ",
+                    choices: function () {
+                        var roleArr = [];
+                        for (let i = 0; i < res.length; i++) {
+                            roleArr.push(res[i].title);
+                        }
+                        return roleArr;
+                    },
+
+                }
+            ])
+            //   add role id from query res 
+            .then(function (answer) {
+                let roleId;
+                for (let j = 0; j < res.length; j++) {
+                    if (res[j].title == answer.role) {
+                        roleId = res[j].id;
+                        console.log(roleId)
+                    }
+                }
+                connection.query("INSERT INTO employee SET ?",
+                    {
+                        firstName: answer.firstName,
+                        lastName: answer.lastName,
+                        roleId: roleId,
+                    },
+                    function (err) {
+                        if (err) throw err;
+                        console.table(answer);
+                        console.log(` ==========  Success! Your new employee has been created ========== `);
+                        start();
+                    }
+                )
+            })
+    })
 }
-function newEmployee(){
-
+function viewRoles() {
+start();
 }
-function viewRoles(){
-
+function viewDepts() {
+start();
 }
-function viewDepts(){
-
-}
-function viewEmployees(){
-
+function viewEmployees() {
+start();
 }
