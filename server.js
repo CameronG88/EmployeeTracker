@@ -90,7 +90,9 @@ function newDepartment() {
             )
             console.table(answer);
             console.log(` ==========  Success! Your new department has been added ========== `);
+            start();
         })
+        
 }
 function newRole() {
     inquirer
@@ -182,11 +184,29 @@ function newEmployee() {
     })
 }
 function viewRoles() {
-start();
+    connection.query("SELECT role.id, role.title, department.deptName AS department, role.salary FROM role LEFT JOIN department on role.deptId = department.id;", function (err, results) {
+        if (err) throw err;
+        console.table(results);
+        start();
+
+    }
+    )
 }
+
 function viewDepts() {
-start();
+    connection.query("SELECT department.id, department.deptName FROM employee LEFT JOIN role on employee.roleId = role.id LEFT JOIN department on role.deptId = department.id GROUP BY department.id, department.deptName;", function(err, results) {
+        if (err) throw err;
+        console.table(results);
+        start();
+    }
+    )
 }
+
 function viewEmployees() {
-start();
+    connection.query("SELECT employee.id, employee.firstName, employee.lastName, role.title, role.salary FROM employee_db.employee LEFT JOIN role on role.id = roleId", function (err, results) {
+        if (err) throw err;
+        console.table(results)
+        start();
+    }
+    )
 }
