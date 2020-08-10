@@ -34,7 +34,6 @@ function start() {
                 "View all departments",
                 "View all roles",
                 "View all employees",
-                "Update employee role",
                 "Exit"
             ]
         })
@@ -64,6 +63,10 @@ function start() {
                 case "View all employees":
                     viewEmployees();
                     break;
+
+                case "Exit":
+                    console.log("Goodbye...");
+                    process.exit();
             }
         })
 }
@@ -92,7 +95,7 @@ function newDepartment() {
             console.log(` ==========  Success! Your new department has been added ========== `);
             start();
         })
-        
+
 }
 function newRole() {
     inquirer
@@ -183,25 +186,24 @@ function newEmployee() {
             })
     })
 }
+
+// =================== view functions ==================
 function viewRoles() {
     connection.query("SELECT role.id, role.title, department.deptName AS department, role.salary FROM role LEFT JOIN department on role.deptId = department.id;", function (err, results) {
         if (err) throw err;
         console.table(results);
         start();
-
     }
     )
 }
-
 function viewDepts() {
-    connection.query("SELECT department.id, department.deptName FROM employee LEFT JOIN role on employee.roleId = role.id LEFT JOIN department on role.deptId = department.id GROUP BY department.id, department.deptName;", function(err, results) {
+    connection.query("SELECT department.id, department.deptName FROM employee LEFT JOIN role on employee.roleId = role.id LEFT JOIN department on role.deptId = department.id GROUP BY department.id, department.deptName;", function (err, results) {
         if (err) throw err;
         console.table(results);
         start();
     }
     )
 }
-
 function viewEmployees() {
     connection.query("SELECT employee.id, employee.firstName, employee.lastName, role.title, role.salary FROM employee_db.employee LEFT JOIN role on role.id = roleId", function (err, results) {
         if (err) throw err;
