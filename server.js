@@ -1,7 +1,6 @@
 // require dependencies
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const chalk = require("chalk");
 
 // create the connection to the db
 const connection = mysql.createConnection({
@@ -63,6 +62,7 @@ function start() {
                 case "View all employees":
                     viewEmployees();
                     break;
+                    // To-Do add change role function
 
                 case "Exit":
                     console.log("Goodbye...");
@@ -140,7 +140,7 @@ function newEmployee() {
                 {
                     name: "firstName",
                     type: "input",
-                    message: "Enter new employee's fisrt name: ",
+                    message: "Enter new employee's first name: ",
                 },
                 {
                     name: "lastName",
@@ -212,3 +212,4 @@ function viewEmployees() {
     }
     )
 }
+
