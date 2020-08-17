@@ -17,7 +17,10 @@
   - (https://camerong88.github.io/EmployeeTracker/)
   - (https://github.com/CameronG88/EmployeeTracker)
 
-  ## Screenshots_and _GIFs
+  ## Screenshots_and _Vids
+
+  - ![Video of app working](https://drive.google.com/file/d/1F-mZo3ZS8eaDrYQ8vWiG06vaazyy1wMj/view)
+  - ![Screenshot of veiw](./Assets/viewshot.png)
 
   ## Usage
 As an executvie or business owner I want to quickly create a database to store and manage employee credentials as well as view company role and department specific information. 
@@ -30,7 +33,6 @@ As an executvie or business owner I want to quickly create a database to store a
   - Inquirer
   - JavScript
   - Node.Js
-
 
   ## How_to_Use
 After you make sure you have all the dependencies, run the code 'npm run start' in terminal to generate the initial prompt. Select the action you would like to take and follow the prompts to create your employee database.
